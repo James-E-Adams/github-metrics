@@ -1,0 +1,13 @@
+query ($number_of_repos: Int!) {
+    viewer {
+      name
+      starredRepositories(last: $number_of_repos) {
+        nodes {
+          nameWithOwner
+          stargazers {
+            totalCount
+          }
+        }
+      }
+    }
+  }
