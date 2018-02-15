@@ -4,9 +4,9 @@ import "./App.css";
 import MainstreamChart from "./components/mainstream";
 import QueryOptions from "./components/queryOptions";
 import { GITHUB_TOKEN } from "./config";
-const query = numberOfRepos => `query {   
-  viewer {
-    starredRepositories(last: ${numberOfRepos}) {
+const query = () => `query($userName: String!, $count:Int!) {   
+  user(login: $userName) {
+    starredRepositories(last: $count) {
       edges {
         starredAt
         node {
@@ -37,12 +37,12 @@ class App extends Component {
     this.state = {};
   }
 
-  makeRequest(numberOfRepos = 10) {
-    if (numberOfRepos < 0) return;
+  makeRequest({ count = 10, userName = "James-E-Adams" }) {
+    if (count < 0) return;
     const request = new gitHubRequest();
     request.onload = () => {
       if (request.response.errors) return;
-      const repos = request.response.data.viewer.starredRepositories.edges;
+      const repos = request.response.data.user.starredRepositories.edges;
       const simpleRepos = repos.map(repo => {
         const newRepo = {
           stargazers: repo.node.stargazers.totalCount,
@@ -57,12 +57,16 @@ class App extends Component {
     };
     request.send(
       JSON.stringify({
-        query: query(numberOfRepos)
+        query: query(),
+        variables: {
+          count,
+          userName
+        }
       })
     );
   }
   componentDidMount() {
-    this.makeRequest(10);
+    this.makeRequest({ count: 10, userName: "James-E-Adams" });
   }
   render() {
     const chartOptions = [];
@@ -76,7 +80,7 @@ class App extends Component {
         <div style={{ display: "flex", height: "500px" }}>
           <MainstreamChart chartData={this.state.repos} />
         </div>
-        <QueryOptions onChangeNumber={this.makeRequest.bind(this)} />
+        <QueryOptions onChangeOptions={this.makeRequest.bind(this)} />
       </div>
     );
   }

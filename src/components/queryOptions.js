@@ -3,21 +3,42 @@ import React, { Component } from "react";
 export default class QueryOptions extends Component {
   constructor(props) {
     super(props);
-    this.state = { value: 10 };
+    this.state = { count: 10, userName: "James-E-Adams" };
+    this.requestTimeOut = null;
+  }
+
+  componentDidUpdate() {
+    if (this.requestTimeOut) {
+      clearTimeout(this.requestTimeOut);
+    }
+    this.requestTimeOut = setTimeout(() => {
+      this.props.onChangeOptions(this.state);
+    }, 500);
   }
   render() {
     return (
-      <label>
-        How many back?
-        <input
-          type="number"
-          value={this.state.value}
-          onChange={event => {
-            this.props.onChangeNumber(event.target.value);
-            this.setState({ value: event.target.value });
-          }}
-        />
-      </label>
+      <div>
+        <label>
+          How many back?
+          <input
+            type="number"
+            value={this.state.count}
+            onChange={event => {
+              this.setState({ count: parseInt(event.target.value) });
+            }}
+          />
+        </label>
+        <label>
+          What's your username?
+          <input
+            type="string"
+            value={this.state.userName}
+            onChange={event => {
+              this.setState({ userName: event.target.value });
+            }}
+          />
+        </label>
+      </div>
     );
   }
 }
