@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
+import logo from "./Octocat.jpg";
 import "./App.css";
 import MainstreamChart from "./components/mainstream";
 import QueryOptions from "./components/queryOptions";
