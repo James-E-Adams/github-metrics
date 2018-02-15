@@ -12,7 +12,10 @@ import React from "react";
 const MainStreamChart = ({ chartData, chartOptions }) => {
   return (
     <ResponsiveContainer width={1000} height="80%">
-      <LineChart data={chartData}>
+      <LineChart
+        data={chartData}
+        margin={{ top: 15, right: 100, left: 100, bottom: 5 }}
+      >
         <Line type="monotone" dataKey="stargazers" stroke="#8884d8" />
         <CartesianGrid stroke="#ccc" />
         {/* <XAxis
@@ -24,7 +27,7 @@ const MainStreamChart = ({ chartData, chartOptions }) => {
           {/* <Label value="Date" offset={-10} position="insideBottom" /> */}
         </XAxis>
         <YAxis>
-          <Label value="no. stars" offset={-20} position="left" />
+          <Label value="no. stars" offset={10} position="left" />
         </YAxis>
         <Tooltip />
       </LineChart>
