@@ -19,22 +19,24 @@ export default class QueryOptions extends Component {
     return (
       <div>
         <label>
-          How many back?
-          <input
-            type="number"
-            value={this.state.count}
-            onChange={event => {
-              this.setState({ count: parseInt(event.target.value) });
-            }}
-          />
-        </label>
-        <label>
           What's your username?
           <input
+            className="query-input"
             type="string"
             value={this.state.userName}
             onChange={event => {
               this.setState({ userName: event.target.value });
+            }}
+          />
+        </label>
+        <label>
+          How many back?
+          <input
+            className="query-input"
+            type="number"
+            value={this.state.count}
+            onChange={event => {
+              this.setState({ count: parseInt(event.target.value) });
             }}
           />
         </label>

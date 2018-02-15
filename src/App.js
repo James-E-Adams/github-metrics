@@ -4,22 +4,7 @@ import "./App.css";
 import MainstreamChart from "./components/mainstream";
 import QueryOptions from "./components/queryOptions";
 import { GITHUB_TOKEN } from "./config";
-const query = () => `query($userName: String!, $count:Int!) {   
-  user(login: $userName) {
-    starredRepositories(last: $count) {
-      edges {
-        starredAt
-        node {
-          nameWithOwner
-          stargazers {
-            totalCount
-          }
-        }
-      }
-    }
-  }
-}
-`;
+import starredQuery from "./queries/starredQuery";
 
 const gitHubRequest = () => {
   var xhr = new XMLHttpRequest();
@@ -55,15 +40,7 @@ class App extends Component {
         repos: simpleRepos
       });
     };
-    request.send(
-      JSON.stringify({
-        query: query(),
-        variables: {
-          count,
-          userName
-        }
-      })
-    );
+    request.send(JSON.stringify(starredQuery({ count, userName })));
   }
   componentDidMount() {
     this.makeRequest({ count: 10, userName: "James-E-Adams" });
@@ -74,13 +51,13 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Some stats about my GitHub usage</h1>
+          <h1 className="App-title">Some stats about your GitHub usage</h1>
         </header>
-        <p className="App-intro">First up - How mainstream am I?</p>
+        <p className="App-intro">How mainstream are you?</p>
+        <QueryOptions onChangeOptions={this.makeRequest.bind(this)} />
         <div style={{ display: "flex", height: "500px" }}>
           <MainstreamChart chartData={this.state.repos} />
         </div>
-        <QueryOptions onChangeOptions={this.makeRequest.bind(this)} />
       </div>
     );
   }
