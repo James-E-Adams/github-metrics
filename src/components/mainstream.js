@@ -1,7 +1,7 @@
 import {
   Label,
-  LineChart,
-  Line,
+  ScatterChart,
+  Scatter,
   CartesianGrid,
   XAxis,
   YAxis,
@@ -12,8 +12,7 @@ import React from "react";
 const MainStreamChart = ({ chartData, chartOptions }) => {
   return (
     <ResponsiveContainer width={1000} height="80%">
-      <LineChart data={chartData}>
-        <Line type="monotone" dataKey="stargazers" stroke="#8884d8" />
+      <ScatterChart margin={{ top: 15, right: 100, left: 100, bottom: 5 }}>
         <CartesianGrid stroke="#ccc" />
         {/* <XAxis
           dataKey="starredAt"
@@ -23,11 +22,12 @@ const MainStreamChart = ({ chartData, chartOptions }) => {
         <XAxis dataKey="name">
           {/* <Label value="Date" offset={-10} position="insideBottom" /> */}
         </XAxis>
-        <YAxis>
-          <Label value="no. stars" offset={-20} position="left" />
+        <YAxis dataKey="stargazers">
+          <Label value="stargazers" offset={10} position="left" />
         </YAxis>
-        <Tooltip />
-      </LineChart>
+        <Scatter data={chartData} dataKey="stargazers" stroke="#8884d8" />
+        <Tooltip cursor={{ strokeDasharray: "3 3" }} />
+      </ScatterChart>
     </ResponsiveContainer>
   );
 };
