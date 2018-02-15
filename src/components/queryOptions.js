@@ -1,17 +1,13 @@
 import React, { Component } from "react";
-
+import { debounce } from "lodash";
 export default class QueryOptions extends Component {
   constructor(props) {
     super(props);
     this.state = { count: 10, userName: "James-E-Adams" };
     this.requestTimeOut = null;
   }
-
-  componentDidUpdate() {
-    if (this.requestTimeOut) {
-      clearTimeout(this.requestTimeOut);
-    }
-    this.requestTimeOut = setTimeout(() => {
+  componentWillMount() {
+    this.onChangeOptionsDebounced = debounce(() => {
       this.props.onChangeOptions(this.state);
     }, 500);
   }
@@ -26,6 +22,7 @@ export default class QueryOptions extends Component {
             value={this.state.userName}
             onChange={event => {
               this.setState({ userName: event.target.value });
+              this.onChangeOptionsDebounced();
             }}
           />
         </label>
@@ -37,6 +34,7 @@ export default class QueryOptions extends Component {
             value={this.state.count}
             onChange={event => {
               this.setState({ count: parseInt(event.target.value) });
+              this.onChangeOptionsDebounced();
             }}
           />
         </label>
