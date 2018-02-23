@@ -4,7 +4,7 @@ import "./App.css";
 import MainstreamChart from "./components/mainstream";
 import QueryOptions from "./components/queryOptions";
 import starredQuery from "./queries/starredQuery";
-
+import Footer from "./components/Footer";
 const starGazersRequest = () => {
   var xhr = new XMLHttpRequest();
   xhr.responseType = "json";
@@ -23,7 +23,7 @@ class App extends Component {
     if (count < 0) return;
     const request = new starGazersRequest();
     request.onload = () => {
-      if (request.response.errors) return;
+      if (!request.response || request.response.errors) return;
       const repos = request.response.data.user.starredRepositories.edges;
       const simpleRepos = repos.map(repo => {
         const newRepo = {
@@ -55,6 +55,7 @@ class App extends Component {
         <div style={{ display: "flex", height: "500px" }}>
           <MainstreamChart chartData={this.state.repos} />
         </div>
+        <Footer />
       </div>
     );
   }
