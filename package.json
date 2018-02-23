@@ -2,17 +2,32 @@
   "name": "github-starred",
   "version": "0.1.0",
   "private": true,
+  "main": "index.js",
   "dependencies": {
+    "fs-router": "^0.4.1",
+    "got": "^8.2.0",
+    "micro": "^9.1.0",
+    "mime": "^2.2.0",
+    "rimraf": "^2.6.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build-this": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "now-start": "micro",
+    "delete-sourcemap": "rimraf build/**/*.map",
+    "deploy": "npm run build-this && npm run delete-sourcemap && now -e GITHUB_TOKEN=@git-api-key"
+  },
+  "devDependencies": {
+    "eslint-plugin-flowtype": "^2.46.1",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.7.0",
     "lodash": "^4.17.5",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-scripts": "1.1.1",
     "recharts": "^1.0.0-beta.10"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
   }
 }

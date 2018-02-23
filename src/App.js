@@ -3,16 +3,12 @@ import logo from "./Octocat.jpg";
 import "./App.css";
 import MainstreamChart from "./components/mainstream";
 import QueryOptions from "./components/queryOptions";
-import { GITHUB_TOKEN } from "./config";
 import starredQuery from "./queries/starredQuery";
 
-const gitHubRequest = () => {
+const starGazersRequest = () => {
   var xhr = new XMLHttpRequest();
   xhr.responseType = "json";
-  xhr.open("POST", "https://api.github.com/graphql");
-  xhr.setRequestHeader("Authorization", "bearer " + GITHUB_TOKEN);
-  xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.setRequestHeader("Accept", "application/json");
+  xhr.open("POST", "api");
   return xhr;
 };
 
@@ -23,8 +19,9 @@ class App extends Component {
   }
 
   makeRequest({ count = 10, userName = "James-E-Adams" }) {
+    // make request to backend instead.
     if (count < 0) return;
-    const request = new gitHubRequest();
+    const request = new starGazersRequest();
     request.onload = () => {
       if (request.response.errors) return;
       const repos = request.response.data.user.starredRepositories.edges;
