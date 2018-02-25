@@ -43,7 +43,6 @@ class App extends Component {
     this.makeRequest({ count: 10, userName: "James-E-Adams" });
   }
   render() {
-    const chartOptions = [];
     return (
       <div className="App">
         <header className="App-header">

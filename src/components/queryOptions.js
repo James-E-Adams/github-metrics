@@ -33,7 +33,7 @@ export default class QueryOptions extends Component {
             type="number"
             value={this.state.count}
             onChange={event => {
-              this.setState({ count: parseInt(event.target.value) });
+              this.setState({ count: parseInt(event.target.value,10) });
               this.onChangeOptionsDebounced();
             }}
           />
