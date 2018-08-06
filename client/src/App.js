@@ -5,12 +5,13 @@ import MainstreamChart from "./components/mainstream";
 import QueryOptions from "./components/queryOptions";
 import starredQuery from "./queries/starredQuery";
 import Footer from "./components/Footer";
-const starGazersRequest = () => {
-  var xhr = new XMLHttpRequest();
-  xhr.responseType = "json";
-  xhr.open("POST", "api");
-  return xhr;
-};
+
+// const starGazersRequest = () => {
+//   var xhr = new XMLHttpRequest();
+//   xhr.responseType = "json";
+//   xhr.open("POST", "api");
+//   return xhr;
+// };
 
 class App extends Component {
   constructor(props) {
@@ -18,26 +19,15 @@ class App extends Component {
     this.state = {};
   }
 
-  makeRequest({ count = 10, userName = "James-E-Adams" }) {
-    // make request to backend instead.
-    if (count < 0) return;
-    const request = new starGazersRequest();
-    request.onload = () => {
-      if (!request.response || request.response.errors) return;
-      const repos = request.response.data.user.starredRepositories.edges;
-      const simpleRepos = repos.map(repo => {
-        const newRepo = {
-          stargazers: repo.node.stargazers.totalCount,
-          starredAt: new Date(repo.starredAt).getTime(),
-          name: repo.node.nameWithOwner
-        };
-        return newRepo;
-      });
-      this.setState({
-        repos: simpleRepos
-      });
-    };
-    request.send(JSON.stringify(starredQuery({ count, userName })));
+  makeRequest(params) {
+    fetch("/github", {
+      method: "POST",
+      body: JSON.stringify(params),
+      headers: { "Content-Type": "application/json; charset=utf-8" }
+    })
+      .then(res => res.json())
+      .then(res => console.log("this is the res: ", res));
+    // request.send(JSON.stringify(starredQuery({ count, userName })));
   }
   componentDidMount() {
     this.makeRequest({ count: 10, userName: "James-E-Adams" });

@@ -8,17 +8,22 @@
     "got": "^8.2.0",
     "micro": "^9.1.0",
     "mime": "^2.2.0",
+    "react-scripts": "1.1.4",
     "rimraf": "^2.6.2"
   },
+  "now": {
+    "alias": "github-starred"
+  },
   "scripts": {
-    "alias": "now alias --token=$NOW_TOKEN",
-    "dev": "react-scripts start",
-    "build-this": "react-scripts build",
+    "build:css": "postcss src/styles/index.css -o src/index.css",
+    "watch:css": "postcss src/styles/index.css -o src/index.css -w",
+    "start": "yarn watch:css & react-scripts start",
+    "build": "yarn build:css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "now-start": "micro",
     "delete-sourcemap": "rimraf build/**/*.map",
-    "deploy": "npm i -g now && npm run build-this && npm run delete-sourcemap && now -e GITHUB_TOKEN=@git-api-key -e NODE_ENV=production --token $NOW_TOKEN --npm"
+    "ship": "yarn build && yarn deploy",
+    "deploy": "cd build && now --name james-site --public --alias james && cd .. && now alias"
   },
   "devDependencies": {
     "eslint-plugin-flowtype": "^2.46.1",
@@ -28,8 +33,13 @@
     "lodash": "^4.17.5",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-scripts": "1.1.1",
+    "postcss-cli": "^5.0.0",
     "react-social-icons": "^2.8.1",
-    "recharts": "^1.0.0-beta.10"
-  }
+    "recharts": "^1.0.0-beta.10",
+    "tailwindcss": "^0.5.3"
+  },
+  "proxy": "http://localhost:3001",
+  "moduleRoots": [
+    "src"
+  ]
 }

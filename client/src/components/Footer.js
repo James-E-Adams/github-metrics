@@ -3,7 +3,7 @@ import { SocialIcon } from "react-social-icons";
 
 const Footer = () => {
   return (
-    <div>
+    <div style={{ height: "100%" }}>
       <div style={{ marginBottom: "10px" }}>
         {" "}
         Made with love in Melbourne, Australia{" "}
