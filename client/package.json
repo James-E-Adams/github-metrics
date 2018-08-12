@@ -8,7 +8,9 @@
     "got": "^8.2.0",
     "micro": "^9.1.0",
     "mime": "^2.2.0",
+    "react-loading": "^2.0.3",
     "react-scripts": "1.1.4",
+    "recompose": "^0.28.2",
     "rimraf": "^2.6.2"
   },
   "now": {
@@ -31,9 +33,9 @@
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.7.0",
     "lodash": "^4.17.5",
+    "postcss-cli": "^5.0.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "postcss-cli": "^5.0.0",
     "react-social-icons": "^2.8.1",
     "recharts": "^1.0.0-beta.10",
     "tailwindcss": "^0.5.3"
@@ -41,5 +43,8 @@
   "proxy": "http://localhost:3001",
   "moduleRoots": [
     "src"
-  ]
+  ],
+  "prettier": {
+    "semi": false
+  }
 }

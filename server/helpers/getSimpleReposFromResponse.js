@@ -3,7 +3,7 @@ const getSimpleRepos = response => {
   return repos.map(repo => ({
     stargazers: repo.node.stargazers.totalCount,
     starredAt: new Date(repo.starredAt).getTime(),
-    name: repo.node.nameWithOwnernewRepo
+    name: repo.node.nameWithOwner
   }));
 };
 module.exports = getSimpleRepos;

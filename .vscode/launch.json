@@ -9,8 +9,7 @@
       "request": "launch",
       "name": "Launch Program",
       "env": {
-        "PORT": "3001",
-        "GITHUB_TOKEN": "f2f843d5843900a886333b0bdb365c120a8e9307"
+        "PORT": "3001"
       },
       "program": "${workspaceFolder}/server/bin/www"
     }

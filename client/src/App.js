@@ -1,61 +1,53 @@
-import React, { Component } from "react";
-import logo from "./Octocat.jpg";
-import "./App.css";
-import MainstreamChart from "./components/mainstream";
-import QueryOptions from "./components/queryOptions";
-import starredQuery from "./queries/starredQuery";
-import Footer from "./components/Footer";
+import React, { Component } from "react"
+import withState from "recompose/withState"
+import compose from "recompose/compose"
+import withHandlers from "recompose/withHandlers"
+import Loading from "react-loading"
 
-// const starGazersRequest = () => {
-//   var xhr = new XMLHttpRequest();
-//   xhr.responseType = "json";
-//   xhr.open("POST", "api");
-//   return xhr;
-// };
-
+import MainstreamChart from "./components/mainstream"
+import QueryOptions from "./components/queryOptions"
+import Footer from "./components/Footer"
+import Header from "./components/Header"
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  makeRequest(params) {
-    fetch("/github", {
-      method: "POST",
-      body: JSON.stringify(params),
-      headers: { "Content-Type": "application/json; charset=utf-8" }
-    })
-      .then(res => res.json())
-      .then(res => console.log("this is the res: ", res));
-    // request.send(JSON.stringify(starredQuery({ count, userName })));
-  }
   componentDidMount() {
-    this.makeRequest({ count: 10, userName: "James-E-Adams" });
+    this.props.makeRequest({
+      count: 100,
+      userName: "James-E-Adams"
+    })
   }
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Some stats about your GitHub usage</h1>
-        </header>
-        <p className="App-intro">How mainstream are you?</p>
-        <QueryOptions onChangeOptions={this.makeRequest.bind(this)} />
-        <div style={{ display: "flex", height: "500px" }}>
-          <MainstreamChart chartData={this.state.repos} />
+      <div className="text-center text-white bg-black w-screen h-screen">
+        <Header />
+        <QueryOptions
+          onChangeOptions={this.props.makeRequest}
+          setRepos={this.props.setRepos}
+        />
+        <div className="flex justify-center">
+          {this.props.repos ? (
+            <MainstreamChart chartData={this.props.repos} />
+          ) : (
+            <Loading type="bubbles" color="white" />
+          )}
         </div>
         <Footer />
       </div>
-    );
+    )
   }
 }
 
-/**
- * Cliffhanger:
- * get github token
- * make graphql query
- * get data
- * put into chart
- */
+const makeRequest = ({ setRepos }) => params =>
+  fetch("/github", {
+    method: "POST",
+    body: JSON.stringify(params),
+    headers: { "Content-Type": "application/json; charset=utf-8" }
+  })
+    .then(res => res.json())
+    .then(res => {
+      setRepos(res.repos)
+    })
 
-export default App;
+export default compose(
+  withState("repos", "setRepos", null),
+  withHandlers({ makeRequest })
+)(App)
