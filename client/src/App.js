@@ -17,19 +17,32 @@ class App extends Component {
   }
   render() {
     return (
-      <div className="text-center text-white bg-black w-screen h-screen">
+      <div className="text-center text-white bg-black w-screen h-screen flex flex-col justify-between">
         <Header />
         <QueryOptions
           onChangeOptions={this.props.makeRequest}
           setRepos={this.props.setRepos}
         />
-        <div className="flex justify-center">
-          {this.props.repos ? (
-            <MainstreamChart chartData={this.props.repos} />
-          ) : (
-            <Loading type="bubbles" color="white" />
-          )}
-        </div>
+        {this.props.repos && this.props.repos.length ? (
+          <MainstreamChart chartData={this.props.repos} />
+        ) : this.props.repos && this.props.repos.length === 0 ? (
+          <div className="px-6">
+            {" "}
+            Woops! Did you forget to star anything? How else will all these
+            smarty pants developers compare their collections of imaginary
+            internet points! Go star something!{" "}
+          </div>
+        ) : (
+          <React.Fragment>
+            <div className="flex justify-center">
+              <Loading type="bubbles" color="white" className="block" />
+            </div>
+            <div className="mt-6">
+              Loading for a long time? Double check the username or try with
+              less repos!
+            </div>
+          </React.Fragment>
+        )}
         <Footer />
       </div>
     )

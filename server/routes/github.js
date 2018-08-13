@@ -14,7 +14,11 @@ router.post("/", (req, res, __) => {
         // handle errors
         console.log("oh no!");
       } else {
-        res.send(JSON.stringify({ repos: getSimpleRepos(githubResponse) }));
+        try {
+          res.send(JSON.stringify({ repos: getSimpleRepos(githubResponse) }));
+        } catch (e) {
+          res.send({ error: "parsing error" });
+        }
       }
     }
   );

@@ -18,7 +18,7 @@ export default class QueryOptions extends Component {
         <div>
           What's your username?
           <input
-            className="m-6 border-2"
+            className="m-6 px-6 border-2"
             type="string"
             value={this.state.userName}
             onChange={event => {
@@ -30,7 +30,7 @@ export default class QueryOptions extends Component {
         <div>
           How many back?
           <input
-            className="m-6 border-2"
+            className="m-6 px-6 border-2"
             type="number"
             value={this.state.count}
             onChange={event => {
